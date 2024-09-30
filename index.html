@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gumroad Affiliate Earnings Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .calculator-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+        button {
+            background-color: #1134d1;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #0f2ca1;
+        }
+        .fyi {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #eef2fb;
+            border-left: 4px solid #1134d1;
+        }
+        .fyi h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .fyi ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator-container">
+        <h1>Gumroad Affiliate Earnings Calculator</h1>
+
+        <div class="input-group">
+            <label for="productPrice">Product Price (USD $):</label>
+            <input type="number" id="productPrice" placeholder="Enter product price" value="10">
+        </div>
+        <div class="input-group">
+            <label for="commissionRate">Affiliate Commission (%):</label>
+            <input type="number" id="commissionRate" placeholder="Enter commission rate" value="50">
+        </div>
+        <button onclick="calculateEarnings()">Calculate</button>
+
+        <div class="result" id="result">Your earnings will appear here.</div>
+
+        <div class="fyi">
+            <h2>FYI - Calculation Parameters</h2>
+            <ul>
+                <li><strong>Gumroad Fee:</strong> 10% of the product price</li>
+                <li><strong>Payment Processing Fee:</strong> 2.9% + $0.30 per transaction</li>
+                <li><strong>Affiliate Commission:</strong> % of the product price set by you</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function calculateEarnings() {
+            // Get input values
+            const productPrice = parseFloat(document.getElementById('productPrice').value);
+            const commissionRate = parseFloat(document.getElementById('commissionRate').value) / 100;
+
+            // Gumroad and processing fees
+            const gumroadFee = productPrice * 0.10;
+            const processingFee = (productPrice * 0.029) + 0.30;
+            const affiliateCommission = productPrice * commissionRate;
+
+            // Calculate the creator's remaining earnings
+            const remainingAmount = productPrice - (gumroadFee + processingFee + affiliateCommission);
+
+            // Output breakdown
+            const resultText = `
+                <strong>Breakdown:</strong><br>
+                Product Price: $${productPrice.toFixed(2)}<br>
+                Affiliate Commission (${(commissionRate * 100).toFixed(0)}%): $${affiliateCommission.toFixed(2)}<br>
+                Gumroad Fee (10%): $${gumroadFee.toFixed(2)}<br>
+                Payment Processing Fee (2.9% + $0.30): $${processingFee.toFixed(2)}<br>
+                <strong>Your Earnings:</strong> $${remainingAmount.toFixed(2)} per sale
+            `;
+
+            // Display the result
+            document.getElementById('result').innerHTML = resultText;
+        }
+    </script>
+
+</body>
+</html>
